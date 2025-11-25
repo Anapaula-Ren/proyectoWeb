@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendador de Citas Psicológicas</title>
+    
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    
+    <header class="page-frame top-frame">
+        <div class="color-band green-band"></div>
+        <div class="color-band main-band">
+            <h1 class="header-title">
+                <span class="psi-symbol">&#936;</span> Consultorio Psicológico
+            </h1>
+            <nav>
+            <a href="index.html" class="activo">Agendar</a>
+            <a href="consultas.html">Revisión</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="calendar-section">
+            <div id='calendar'></div> 
+        </div>
+
+        <div class="form-section">
+            <h2>Agenda tu cita</h2>
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label for="nombreCompleto">Nombre Completo</label>
+                    <input type="text" id="nombreCompleto" name="nombreCompleto" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="numeroTelefono">Número de teléfono</label>
+                    <input type="tel" id="numeroTelefono" name="numeroTelefono" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edad">Edad</label>
+                    <input type="number" id="edad" name="edad" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="">Selecciona</option>
+                        <option value="Niño">Niño</option>
+                        <option value="Adolescente">Adolescente</option>
+                        <option value="Adulto">Adulto</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaCita">Fecha Seleccionada</label>
+                    <input type="date" id="fechaCita" name="fechaCita" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="horaCita">Hora</label>
+                    <select id="horaCita" name="horaCita" required>
+                        <option value="">Selecciona una hora</option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="15:00">03:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                        <option value="17:00">05:00 PM</option>
+                        <option value="18:00">06:00 PM</option>
+                        <option value="19:00">07:00 PM</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-agendar">Agendar</button>
+            </form>
+        </div>
+    </div>
+    
+    <footer class="page-frame bottom-frame">
+        <div class="color-band green-band"></div>
+        <div class="color-band main-band footer-content">
+            <p>
+                <i class="fas fa-phone-alt"></i> Teléfono: 55 1234 5678 | 
+                <i class="fas fa-envelope"></i> Email: info@consultorio.com | 
+                <i class="fab fa-facebook"></i> Facebook: @PsicologiaSalud
+            </p>
+        </div>
+    </footer>
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/es.js'></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta y Baja de Citas</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="index.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    
+    <header class="page-frame top-frame">
+        <div class="color-band green-band"></div>
+        <div class="color-band main-band">
+            <h1 class="header-title">
+                <span class="psi-symbol">&#936;</span> Consultorio Psicológico PRO
+            </h1>
+            <nav>
+            <a href="index.html" class="activo">Agendar</a>
+            <a href="consultas.html">Revisión</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="table-section">
+            <h2>Citas Agendadas</h2>
+            <div class="table-responsive">
+                <table class="citas-table">
+                    <thead>
+                        <tr>
+                            <th>ID Cita</th>
+                            <th>Paciente</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody id="citasTableBody">
+                        <tr><td colspan="4">Cargando citas...</td></tr> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="details-section">
+            <h2>Detalles de la Cita</h2>
+            <div id="citaDetails">
+                <p><strong>Nombre:</strong> <span id="detailNombre">---</span></p>
+                <p><strong>Edad/Categoría:</strong> <span id="detailEdad">---</span></p>
+                <p><strong>Teléfono:</strong> <span id="detailTelefono">---</span></p>
+                <p><strong>Fecha:</strong> <span id="detailFecha">---</span></p>
+                <p><strong>Hora:</strong> <span id="detailHora">---</span></p>
+            </div>
+            
+            <button id="eliminarCitaBtn" class="btn-eliminar" disabled>
+                ELIMINAR CITA 🗑️
+            </button>
+        </div>
+    </div>
+
+    <footer class="page-frame bottom-frame">
+        <div class="color-band green-band"></div>
+        <div class="color-band main-band footer-content">
+            <p>
+                <i class="fas fa-phone-alt"></i> Teléfono: 55 1234 5678 | 
+                <i class="fas fa-envelope"></i> Email: info@consultorio.com | 
+                <i class="fab fa-facebook"></i> Facebook: @PsicologiaSalud
+            </p>
+        </div>
+    </footer>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const citasTableBody = document.getElementById('citasTableBody');
+            const citaDetails = document.getElementById('citaDetails');
+            const eliminarCitaBtn = document.getElementById('eliminarCitaBtn');
+
+            let selectedCitaId = null; 
+            // Apunta al único endpoint Serverless para todas las operaciones
+            const API_URL = '/api/citas'; 
+
+            // --- 1. FUNCIÓN DE CONSULTA (GET) ---
+            async function fetchCitas() {
+                citasTableBody.innerHTML = '<tr><td colspan="4">Cargando citas...</td></tr>';
+                
+                try {
+                    // Llama a /api/citas con el método GET (Consulta)
+                    const response = await fetch(API_URL); 
+                    
+                    if (!response.ok) {
+                        const errorBody = await response.json().catch(() => ({ message: 'Error desconocido del servidor.' }));
+                        throw new Error(`HTTP Error ${response.status}: ${errorBody.message || 'Error al conectar.'}`);
+                    }
+                    const citas = await response.json();
+
+                    citasTableBody.innerHTML = ''; 
+
+                    if (citas.length === 0) {
+                        citasTableBody.innerHTML = '<tr><td colspan="4">No hay citas agendadas.</td></tr>';
+                        return;
+                    }
+
+                    citas.forEach(cita => {
+                        const row = document.createElement('tr');
+                        row.dataset.citaId = cita.id_cita; 
+                        row.innerHTML = `
+                            <td>${cita.id_cita}</td>
+                            <td>${cita.nombre_paciente}</td>
+                            <td>${cita.fecha_cita}</td>
+                            <td>${cita.hora_cita.substring(0, 5)}</td>
+                        `;
+                        row.addEventListener('click', () => showCitaDetails(cita));
+                        citasTableBody.appendChild(row);
+                    });
+                } catch (error) {
+                    console.error('Error al obtener las citas:', error);
+                    citasTableBody.innerHTML = `<tr><td colspan="4">Error al cargar las citas. ${error.message}</td></tr>`;
+                }
+            }
+
+            // --- 2. Muestra los detalles de la fila seleccionada ---
+            function showCitaDetails(cita) {
+                selectedCitaId = cita.id_cita;
+                document.getElementById('detailNombre').textContent = cita.nombre_paciente;
+                document.getElementById('detailEdad').textContent = `${cita.edad} años - ${cita.categoria}`;
+                document.getElementById('detailTelefono').textContent = cita.numero_telefono;
+                document.getElementById('detailFecha').textContent = cita.fecha_cita;
+                document.getElementById('detailHora').textContent = cita.hora_cita.substring(0, 5); 
+
+                eliminarCitaBtn.disabled = false; 
+                
+                // Efecto visual: Resaltar la fila seleccionada
+                document.querySelectorAll('.citas-table tbody tr').forEach(row => {
+                    row.classList.remove('selected-row');
+                });
+                document.querySelector(`[data-cita-id="${cita.id_cita}"]`).classList.add('selected-row');
+            }
+
+            // --- 3. FUNCIÓN DE BAJA (DELETE) ---
+            eliminarCitaBtn.addEventListener('click', async function() {
+                if (!selectedCitaId) return;
+
+                if (!confirm('¿Estás seguro de que quieres eliminar esta cita? Esta acción es irreversible.')) return;
+
+                try {
+                    // Llama a /api/citas con el método DELETE, pasando el ID en la query string
+                    const response = await fetch(`${API_URL}?id=${selectedCitaId}`, {
+                        method: 'DELETE' 
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error al eliminar la cita');
+                    }
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Cita eliminada con éxito.');
+                        
+                        // Refrescar la tabla y limpiar los detalles
+                        fetchCitas(); 
+                        selectedCitaId = null;
+                        eliminarCitaBtn.disabled = true;
+                        // Limpiar el panel de detalles después de la eliminación
+                        document.getElementById('detailNombre').textContent = '---';
+                        document.getElementById('detailEdad').textContent = '---';
+                        document.getElementById('detailTelefono').textContent = '---';
+                        document.getElementById('detailFecha').textContent = '---';
+                        document.getElementById('detailHora').textContent = '---';
+                    } else {
+                        alert('No se pudo eliminar la cita: ' + (result.message || 'Error desconocido.'));
+                    }
+                } catch (error) {
+                    console.error('Error al eliminar la cita:', error);
+                    alert('Hubo un error de conexión al eliminar la cita.');
+                }
+            });
+
+            // Iniciar la consulta al cargar la página
+            fetchCitas();
+        });
+    </script>
+    
+</body>
+</html>

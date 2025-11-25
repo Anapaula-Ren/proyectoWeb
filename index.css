@@ -1,0 +1,269 @@
+/* Variables CSS para los colores */
+:root {
+    --primary-color: #874dac; /* Morado oscuro de tu mockup */
+    --secondary-color: #fbf2fc; /* Morado más claro para secciones */
+    --accent-color: #4caf50; /* Verde vibrante para botón y franja */
+    --background-light: #f4f4f4; /* Fondo claro para el cuerpo */
+    --text-color: #333;
+    --input-bg: #fff;
+}
+
+/* Reset básico y tipografía */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-light);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ----------------------------------- */
+/* ESTILOS DE FRANJAS SUPERIOR E INFERIOR */
+/* ----------------------------------- */
+
+.page-frame {
+    width: 100%;
+    /* margin-top: 1rem; Si quieres espacio sobre el header */
+}
+
+/* Franja Verde que va pegada al Morado */
+.color-band {
+    width: 100%;
+}
+
+.green-band {
+    background-color: var(--accent-color);
+    height: 5px; /* Línea verde delgada */
+}
+/* ... (Todo el CSS anterior se mantiene) ... */
+
+/* ----------------------------------- */
+/* NUEVOS ESTILOS DE NAVEGACIÓN (HEADER) */
+/* ----------------------------------- */
+
+/* Ajustamos el main-band para alinear el título y la navegación en extremos */
+.main-band {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-top: 2px;
+    
+    /* MODIFICACIÓN: Usamos Flexbox para alinear el título a la izquierda y la navegación a la derecha */
+    display: flex; 
+    align-items: center;
+    justify-content: space-between; /* Empuja el título a un extremo y la navegación al otro */
+}
+
+/* Estilos para el Título (para que no tome todo el ancho) */
+.header-title {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: left;
+    width: auto; /* Permite que la navegación se coloque al lado */
+}
+
+/* Contenedor de Navegación */
+nav {
+    display: flex; /* Alinea los enlaces horizontalmente */
+    gap: 1.5rem; /* Espacio entre los enlaces */
+}
+
+/* Estilos de los enlaces */
+nav a {
+    color: white; /* Color de letra blanco */
+    text-decoration: none; /* Quitar el subrayado */
+    font-weight: 400;
+    font-size: 1rem;
+    padding: 0.5rem 0.2rem;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--secondary-color); /* Cambia a morado claro al pasar el ratón */
+}
+
+/* Estilo para el enlace activo */
+nav a.activo {
+    font-weight: 700;
+    border-bottom: 3px solid var(--accent-color); /* Línea verde debajo del enlace activo */
+}
+
+/*.main-band {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    // Se agrega un espacio blanco diminuto entre la banda verde y la principal 
+    margin-top: 2px; 
+    display: flex; // Para centrar contenido del footer y título del header 
+    align-items: center;
+}
+
+/* Estilos Específicos del Header 
+.header-title {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: left; /*Título a la izquierda
+    width: 100%;
+}
+
+.psi-symbol {
+    font-size: 2.5rem; /* Hace que el Psi sea más grande 
+    margin-right: 10px;
+}*/
+
+/* Estilos Específicos del Footer */
+.bottom-frame {
+    margin-top: auto; /* Empuja el footer hacia abajo */
+}
+
+.footer-content {
+    justify-content: center; /* Centra el contenido de contacto */
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.footer-content i {
+    margin-right: 5px;
+}
+
+/* ----------------------------------- */
+/* ESTILOS DEL CONTENIDO CENTRAL (ORIGINALES) */
+/* ----------------------------------- */
+
+.container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    background-color: var(--input-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    flex-grow: 1; 
+}
+
+.calendar-section {
+    flex: 2; 
+    min-width: 400px;
+}
+
+/* Estilos para FullCalendar (mantenidos) */
+#calendar {
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: var(--input-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* (El resto de estilos de FullCalendar y Formulario se mantienen del código anterior) */
+.fc .fc-toolbar-title {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.fc .fc-button-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.fc .fc-button-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* Sección del Formulario */
+.form-section {
+    flex: 1; 
+    min-width: 300px; 
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    border-radius: 10px;
+    color: rgb(43, 41, 41); 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: rgb(8, 8, 8);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.form-group input[type="date"]:read-only {
+    background-color: #e9ecef; 
+    cursor: not-allowed;
+}
+
+/* Botón de Agendar */
+.btn-agendar {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1.5rem;
+}
+
+.btn-agendar:hover {
+    background-color: #43a047; 
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+
+    .calendar-section, .form-section {
+        flex: auto; 
+        min-width: unset;
+    }
+}
+

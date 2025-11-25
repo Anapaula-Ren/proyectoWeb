@@ -13,8 +13,12 @@ const dbConfig = {
 
     // --- LÍNEA A AÑADIR (CRUCIAL) ---
     ssl: {
+        // Usar el certificado que obtuvimos de Vercel (o null si no existe)
+        ca: caCert || null,
+        // Mantener por si hay problemas de verificación:
+        rejectUnauthorized: true // Vercel ya debería confiar en el certificado, así que lo ponemos en tru
         // En entornos Cloud, se requiere la bandera 'rejectUnauthorized' en false
-        rejectUnauthorized: false
+        //rejectUnauthorized: false
     }
     // --------------------------------
 };

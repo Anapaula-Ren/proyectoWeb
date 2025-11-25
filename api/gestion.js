@@ -9,7 +9,14 @@ const dbConfig = {
     port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 26245, 
     user: process.env.DB_USER,
     password: process.env.DB_PASS, // Aquí se usará el valor de Vercel
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+
+    // --- LÍNEA A AÑADIR (CRUCIAL) ---
+    ssl: {
+        // En entornos Cloud, se requiere la bandera 'rejectUnauthorized' en false
+        rejectUnauthorized: false
+    }
+    // --------------------------------
 };
 
 module.exports = async (req, res) => {

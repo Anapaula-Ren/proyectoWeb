@@ -1,4 +1,4 @@
-// api/citas.js - Endpoints consolidados para ALTA, CONSULTA y BAJA
+// api/gestion.js - Endpoints consolidados para ALTA, CONSULTA y BAJA
 
 const mysql = require('mysql2/promise');
 //cacert

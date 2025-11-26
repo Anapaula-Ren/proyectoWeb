@@ -83,14 +83,14 @@
 
             let selectedCitaId = null; 
             // Apunta al único endpoint Serverless para todas las operaciones
-            const API_URL = '/api/citas'; 
+            const API_URL = '/api/gestion'; 
 
             // --- 1. FUNCIÓN DE CONSULTA (GET) ---
             async function fetchCitas() {
                 citasTableBody.innerHTML = '<tr><td colspan="4">Cargando citas...</td></tr>';
                 
                 try {
-                    // Llama a /api/citas con el método GET (Consulta)
+                    // Llama a /api/gestion con el método GET (Consulta)
                     const response = await fetch(API_URL); 
                     
                     if (!response.ok) {
@@ -149,7 +149,7 @@
                 if (!confirm('¿Estás seguro de que quieres eliminar esta cita? Esta acción es irreversible.')) return;
 
                 try {
-                    // Llama a /api/citas con el método DELETE, pasando el ID en la query string
+                    // Llama a /api/gestion con el método DELETE, pasando el ID en la query string
                     const response = await fetch(`${API_URL}?id=${selectedCitaId}`, {
                         method: 'DELETE' 
                     });

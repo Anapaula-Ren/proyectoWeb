@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var horaCitaSelect = document.getElementById('horaCita'); // Referencia al <select> de la hora
 
     // --- NUEVO CÓDIGO 1: DECLARACIÓN DE LA URL DE LA API ---
-    const API_URL = '/api/citas'; 
+    const API_URL = '/api/gestion'; 
     // --------------------------------------------------------
 
     // Verificación de existencia del elemento DOM
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
        console.log('--- Intentando FETCH --- Datos a enviar:', formData); // NUEVA LÍNEA DE DIAGNÓSTICO
 
         try {
-            // Llama a /api/citas usando el método POST
+            // Llama a /api/gestion usando el método POST
             const response = await fetch(API_URL, { 
                 method: 'POST',
                 headers: {

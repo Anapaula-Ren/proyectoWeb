@@ -78,7 +78,8 @@ module.exports = async (req, res) => {
         // 1. ALTA (CREAR) - Maneja el método POST
         // -----------------------------------------------------------------
         if (method === 'POST') {
-            const data = JSON.parse(req.body); 
+            const data = req.body;
+            //const data = JSON.parse(req.body); 
             const { nombreCompleto, edad, categoria, numeroTelefono, fechaCita, horaCita } = data;
 
             await connection.beginTransaction(); // Iniciar transacción

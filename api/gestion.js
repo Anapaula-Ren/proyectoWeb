@@ -1,6 +1,10 @@
 // api/citas.js - Endpoints consolidados para ALTA, CONSULTA y BAJA
 
 const mysql = require('mysql2/promise');
+//cacert
+const caCert = process.env.MYSQL_CA_CERT; 
+// 2. Si la variable existe, reemplazamos '\n' por saltos de línea reales:
+const formattedCaCert = caCert ? caCert.replace(/\\n/g, '\n') : null;
 
 // Configuración de la conexión usando Variables de Entorno de Vercel
 const dbConfig = {
@@ -13,10 +17,17 @@ const dbConfig = {
 
     // --- LÍNEA A AÑADIR (CRUCIAL) ---
     ssl: {
+
+            ca: formattedCaCert, // Usa el certificado formateado
+        // Si el certificado es correcto, la verificación DEBERÍA ser true, pero lo dejamos así para asegurar la conexión:
+        // rejectUnauthorized: false
+
+
         // Usar el certificado que obtuvimos de Vercel (o null si no existe)
-        ca: caCert || null,
+       /* ca: caCert || null,
         // Mantener por si hay problemas de verificación:
-        rejectUnauthorized: true // Vercel ya debería confiar en el certificado, así que lo ponemos en tru
+        rejectUnauthorized: true // Vercel ya debería confiar en el certificado, así que lo ponemos en tru*/
+
         // En entornos Cloud, se requiere la bandera 'rejectUnauthorized' en false
         //rejectUnauthorized: false
     }

@@ -75,10 +75,11 @@ document.addEventListener('DOMContentLoaded', function() {
             horaCita: document.getElementById('horaCita').value
         };
 
-        if (!formData.fechaCita || !formData.horaCita) {
+        /*if (!formData.fechaCita || !formData.horaCita) {
              alert('Por favor, selecciona una fecha y hora válidas en el calendario.');
              return;
-        }
+        }*/
+       console.log('--- Intentando FETCH --- Datos a enviar:', formData); // NUEVA LÍNEA DE DIAGNÓSTICO
 
         try {
             // Llama a /api/citas usando el método POST

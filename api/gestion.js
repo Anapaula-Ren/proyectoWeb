@@ -2,9 +2,9 @@
 
 const mysql = require('mysql2/promise');
 //cacert
-const caCert = process.env.MYSQL_CA_CERT; 
+//const caCert = process.env.MYSQL_CA_CERT; 
 // 2. Si la variable existe, reemplazamos '\n' por saltos de línea reales:
-const formattedCaCert = caCert ? caCert.replace(/\\n/g, '\n') : null;
+//const formattedCaCert = caCert ? caCert.replace(/\\n/g, '\n') : null;
 
 // Configuración de la conexión usando Variables de Entorno de Vercel
 const dbConfig = {

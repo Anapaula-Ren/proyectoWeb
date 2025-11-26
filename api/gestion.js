@@ -18,7 +18,13 @@ const dbConfig = {
     // --- LÍNEA A AÑADIR (CRUCIAL) ---
     ssl: {
 
-            ca: formattedCaCert, // Usa el certificado formateado
+            ca: formattedCaCert, // Usa el certificado que proporcionaste
+        // ESTO ES LO QUE SOLUCIONA EL 'certificate signature failure':
+        rejectUnauthorized: true, // Debe ser true para verificar con el CA
+        minVersion: 'TLSv1.2', // Asegura un protocolo moderno compatible
+
+
+           // ca: formattedCaCert, // Usa el certificado formateado
         // Si el certificado es correcto, la verificación DEBERÍA ser true, pero lo dejamos así para asegurar la conexión:
         // rejectUnauthorized: false
 
@@ -31,6 +37,14 @@ const dbConfig = {
         // En entornos Cloud, se requiere la bandera 'rejectUnauthorized' en false
         //rejectUnauthorized: false
     }
+
+    // Si sigue fallando, la única opción es:
+    // ssl: 'Amazon RDS', // Para bases de datos que usan un CA conocido (menos probable que funcione con Aiven)
+    // Pero si todo lo demás falla:
+    // ssl: {
+    //     ca: formattedCaCert,
+    //     rejectUnauthorized: false // <-- Intenta con 'false' si 'true' sigue fallando
+    // }
     // --------------------------------
 };
 

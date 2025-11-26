@@ -18,14 +18,14 @@ const dbConfig = {
     // --- LÍNEA A AÑADIR (CRUCIAL) ---
     ssl: {
 
-            ca: formattedCaCert,
+            /*ca: formattedCaCert,
         
         // El problema de 'certificate signature failure' se resuelve
         // diciéndole al cliente que confíe en la cadena que le estamos dando.
         rejectUnauthorized: true, 
         
         // Forzar el uso del protocolo TLS 1.2 o superior
-        minVersion: 'TLSv1.2',
+        minVersion: 'TLSv1.2',*/
 
            /* ca: formattedCaCert, // Usa el certificado que proporcionaste
         // ESTO ES LO QUE SOLUCIONA EL 'certificate signature failure':
@@ -44,7 +44,7 @@ const dbConfig = {
         rejectUnauthorized: true // Vercel ya debería confiar en el certificado, así que lo ponemos en tru*/
 
         // En entornos Cloud, se requiere la bandera 'rejectUnauthorized' en false
-        //rejectUnauthorized: false
+        rejectUnauthorized: false
     }
 
     // Si sigue fallando, la única opción es:

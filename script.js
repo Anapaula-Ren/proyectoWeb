@@ -3,15 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var fechaCitaInput = document.getElementById('fechaCita');
     var horaCitaSelect = document.getElementById('horaCita'); // Referencia al <select> de la hora
 
-    // --- NUEVO CÓDIGO 1: DECLARACIÓN DE LA URL DE LA API ---
+    
     const API_URL = '/api/gestion'; 
-    // --------------------------------------------------------
-
     // Verificación de existencia del elemento DOM
-    if (!calendarEl) {
+   /* if (!calendarEl) {
         console.error("No se encontró el elemento con ID 'calendar'.");
         return;
-    }
+    }*/
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         // --- Cambios Cruciales ---

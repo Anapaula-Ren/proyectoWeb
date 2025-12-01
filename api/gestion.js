@@ -40,18 +40,48 @@ module.exports = async (req, res) => {
         // 1. ALTA (CREAR) - Maneja el método POST
         // -----------------------------------------------------------------
         if (method === 'POST') {
-            const data = req.body;
+           // const data = req.body;
+           const data= typeof req.body === 'string'? JSON.parse(req.body) : req.body;
             //const data = JSON.parse(req.body); 
             const { nombreCompleto, edad, categoria, numeroTelefono, fechaCita, horaCita } = data;
 
             await connection.beginTransaction(); // Iniciar transacción
+            //no cita duplicada
+            const [existingCita] = await connection.execute(
+            'SELECT id_cita FROM citas WHERE fecha_cita = ? AND hora_cita = ?',
+            [fechaCita, horaCita]
+            );
 
-            // INSERTAR PACIENTE
-            const [patientResult] = await connection.execute(
+            if (existingCita.length > 0) {
+                await connection.rollback(); // Deshacer cualquier operación
+                return res.status(409).json({ success: false, message: 'La hora y fecha seleccionadas ya están ocupadas.' });
+            }
+            //final no cita duplicada
+            // checar si el paciente ya existe
+            let id_paciente;
+            const [existingPatient] = await connection.execute(
+                'SELECT id_paciente FROM pacientes WHERE nombre_completo = ? AND numero_telefono = ?',
+                [nombreCompleto, numeroTelefono]
+            );
+
+            if (existingPatient.length > 0) {
+                // Paciente encontrado: usar su ID existente
+                id_paciente = existingPatient[0].id_paciente;
+            } else {
+                // Paciente nuevo: Insertar y obtener el nuevo ID
+                const [patientResult] = await connection.execute(
+                    'INSERT INTO pacientes (nombre_completo, edad, categoria, numero_telefono) VALUES (?, ?, ?, ?)',
+                    [nombreCompleto, edad, categoria, numeroTelefono]
+                );
+                id_paciente = patientResult.insertId;
+            }
+            //final para checar si el paciente ya existe
+            // INSERTAR PACIENTE prev
+            /*const [patientResult] = await connection.execute(
                 'INSERT INTO pacientes (nombre_completo, edad, categoria, numero_telefono) VALUES (?, ?, ?, ?)',
                 [nombreCompleto, edad, categoria, numeroTelefono]
             );
-            const id_paciente = patientResult.insertId;
+            const id_paciente = patientResult.insertId;*/
 
             // INSERTAR CITA
             await connection.execute(

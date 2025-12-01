@@ -1,10 +1,6 @@
 // api/gestion.js - Endpoints consolidados para ALTA, CONSULTA y BAJA
 
 const mysql = require('mysql2/promise');
-//cacert
-//const caCert = process.env.MYSQL_CA_CERT; 
-// 2. Si la variable existe, reemplazamos '\n' por saltos de línea reales:
-//const formattedCaCert = caCert ? caCert.replace(/\\n/g, '\n') : null;
 
 // Configuración de la conexión usando Variables de Entorno de Vercel
 const dbConfig = {
@@ -17,44 +13,10 @@ const dbConfig = {
 
     // --- LÍNEA A AÑADIR (CRUCIAL) ---
     ssl: {
-
-            /*ca: formattedCaCert,
-        
-        // El problema de 'certificate signature failure' se resuelve
-        // diciéndole al cliente que confíe en la cadena que le estamos dando.
-        rejectUnauthorized: true, 
-        
-        // Forzar el uso del protocolo TLS 1.2 o superior
-        minVersion: 'TLSv1.2',*/
-
-           /* ca: formattedCaCert, // Usa el certificado que proporcionaste
-        // ESTO ES LO QUE SOLUCIONA EL 'certificate signature failure':
-        rejectUnauthorized: true, // Debe ser true para verificar con el CA
-        minVersion: 'TLSv1.2', // Asegura un protocolo moderno compatible*/
-
-
-           // ca: formattedCaCert, // Usa el certificado formateado
-        // Si el certificado es correcto, la verificación DEBERÍA ser true, pero lo dejamos así para asegurar la conexión:
-        // rejectUnauthorized: false
-
-
-        // Usar el certificado que obtuvimos de Vercel (o null si no existe)
-       /* ca: caCert || null,
-        // Mantener por si hay problemas de verificación:
-        rejectUnauthorized: true // Vercel ya debería confiar en el certificado, así que lo ponemos en tru*/
-
-        // En entornos Cloud, se requiere la bandera 'rejectUnauthorized' en false
-        rejectUnauthorized: false
+           rejectUnauthorized: false
     }
 
-    // Si sigue fallando, la única opción es:
-    // ssl: 'Amazon RDS', // Para bases de datos que usan un CA conocido (menos probable que funcione con Aiven)
-    // Pero si todo lo demás falla:
-    // ssl: {
-    //     ca: formattedCaCert,
-    //     rejectUnauthorized: false // <-- Intenta con 'false' si 'true' sigue fallando
-    // }
-    // --------------------------------
+    
 };
 
 module.exports = async (req, res) => {

@@ -266,4 +266,132 @@ nav a.activo {
         min-width: unset;
     }
 }
+/*gestion*/
+/* ========================================================================= */
+/* --- ESTILOS ESPECÍFICOS PARA EL PANEL DE CONSULTA Y BAJA (consultas.html) --- */
+/* ========================================================================= */
+
+/* Aseguramos que los elementos de contenido central (tabla y detalles) no se estiren */
+.container {
+    /* Mantenemos display: flex, justify-content: space-between, pero añadimos: */
+    align-items: flex-start; /* CRÍTICO: Evita que la tabla o los detalles se estiren hasta abajo */
+}
+
+/* 1. SECCIÓN DE LA TABLA (Muestra el Listado de Citas) */
+.table-section {
+    flex: 2; /* Ocupa 2/3 del espacio horizontal */
+    min-width: 500px;
+    background-color: var(--input-bg); /* Fondo blanco */
+    padding: 1.5rem;
+    border-radius: 10px;
+    /* Sombra para efecto de tarjeta flotante */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+}
+
+.table-section h2 {
+    text-align: left; /* Título alineado a la izquierda */
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+/* Estilos de la Tabla */
+.citas-table {
+    width: 100%;
+    border-collapse: collapse; /* Bordes unidos */
+}
+
+.citas-table thead {
+    background-color: var(--primary-color); /* Morado Oscuro para la cabecera */
+    color: white;
+}
+
+.citas-table th,
+.citas-table td {
+    padding: 0.8rem;
+    text-align: left;
+    border: 1px solid #ddd; /* Bordes gris claro */
+}
+
+/* Estilo para las filas de datos */
+.citas-table tbody tr {
+    transition: background-color 0.2s;
+}
+
+.citas-table tbody tr:hover {
+    background-color: #f0f0f0; /* Resalta la fila al pasar el ratón */
+    cursor: pointer;
+}
+
+/* Estilo para la fila seleccionada por JS */
+.citas-table tbody tr.selected-row {
+    background-color: var(--secondary-color); /* Morado claro para la fila activa */
+    font-weight: 500;
+}
+
+
+/* 2. SECCIÓN DE DETALLES (Muestra info de la cita seleccionada) */
+.details-section {
+    flex: 1; /* Ocupa 1/3 del espacio horizontal */
+    min-width: 300px;
+    background-color: var(--input-bg); /* Fondo blanco, como en tu imagen */
+    padding: 1.5rem;
+    border-radius: 10px;
+    color: var(--text-color);
+    /* Sombra para efecto de tarjeta flotante */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+}
+
+.details-section h2 {
+    text-align: left; /* Título alineado a la izquierda */
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--secondary-color); /* Separador sutil */
+    padding-bottom: 0.5rem;
+}
+
+#citaDetails p {
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+}
+
+#citaDetails strong {
+    color: var(--primary-color); /* Color principal para las etiquetas */
+}
+
+/* 3. BOTÓN DE ELIMINAR (Baja) */
+.btn-eliminar {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--accent-color); /* Verde vibrante */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 2rem;
+}
+
+.btn-eliminar:hover:not(:disabled) {
+    background-color: #43a047; /* Verde más oscuro al pasar el ratón */
+}
+
+.btn-eliminar:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Asegura la responsividad si los elementos se apilan */
+@media (max-width: 768px) {
+    .table-section, .details-section {
+        min-width: unset;
+        flex: auto;
+    }
+}
 

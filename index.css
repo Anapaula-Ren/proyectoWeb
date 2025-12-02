@@ -1,9 +1,9 @@
 /* Variables CSS para los colores */
 :root {
-    --primary-color: #874dac; /* Morado oscuro de tu mockup */
-    --secondary-color: #fbf2fc; /* Morado más claro para secciones */
-    --accent-color: #4caf50; /* Verde vibrante para botón y franja */
-    --background-light: #f4f4f4; /* Fondo claro para el cuerpo */
+    --primary-color: #874dac;
+    --secondary-color: #fbf2fc; 
+    --accent-color: #4caf50;
+    --background-light: #f4f4f4;
     --text-color: #333;
     --input-bg: #fff;
 }
@@ -25,14 +25,6 @@ body {
     min-height: 100vh;
 }
 
-/* ----------------------------------- */
-/* ESTILOS DE FRANJAS SUPERIOR E INFERIOR */
-/* ----------------------------------- */
-
-.page-frame {
-    width: 100%;
-    /* margin-top: 1rem; Si quieres espacio sobre el header */
-}
 
 /* Franja Verde que va pegada al Morado */
 .color-band {
@@ -41,13 +33,8 @@ body {
 
 .green-band {
     background-color: var(--accent-color);
-    height: 5px; /* Línea verde delgada */
+    height: 5px;
 }
-/* ... (Todo el CSS anterior se mantiene) ... */
-
-/* ----------------------------------- */
-/* NUEVOS ESTILOS DE NAVEGACIÓN (HEADER) */
-/* ----------------------------------- */
 
 /* Ajustamos el main-band para alinear el título y la navegación en extremos */
 .main-band {
@@ -56,32 +43,30 @@ body {
     padding: 1rem 2rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     margin-top: 2px;
-    
-    /* MODIFICACIÓN: Usamos Flexbox para alinear el título a la izquierda y la navegación a la derecha */
     display: flex; 
     align-items: center;
     justify-content: space-between; /* Empuja el título a un extremo y la navegación al otro */
 }
 
-/* Estilos para el Título (para que no tome todo el ancho) */
+
 .header-title {
     margin: 0;
     font-size: 1.8rem;
     font-weight: 700;
     text-align: left;
-    width: auto; /* Permite que la navegación se coloque al lado */
+    width: auto; 
 }
 
-/* Contenedor de Navegación */
+
 nav {
-    display: flex; /* Alinea los enlaces horizontalmente */
-    gap: 1.5rem; /* Espacio entre los enlaces */
+    display: flex; 
+    gap: 1.5rem; 
 }
 
 /* Estilos de los enlaces */
 nav a {
-    color: white; /* Color de letra blanco */
-    text-decoration: none; /* Quitar el subrayado */
+    color: white; 
+    text-decoration: none; /**/
     font-weight: 400;
     font-size: 1rem;
     padding: 0.5rem 0.2rem;
@@ -92,44 +77,21 @@ nav a:hover {
     color: var(--secondary-color); /* Cambia a morado claro al pasar el ratón */
 }
 
-/* Estilo para el enlace activo */
+
 nav a.activo {
     font-weight: 700;
     border-bottom: 3px solid var(--accent-color); /* Línea verde debajo del enlace activo */
 }
 
-/*.main-band {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    // Se agrega un espacio blanco diminuto entre la banda verde y la principal 
-    margin-top: 2px; 
-    display: flex; // Para centrar contenido del footer y título del header 
-    align-items: center;
-}
 
-/* Estilos Específicos del Header 
-.header-title {
-    margin: 0;
-    font-size: 1.8rem;
-    font-weight: 700;
-    text-align: left; /*Título a la izquierda
-    width: 100%;
-}
 
-.psi-symbol {
-    font-size: 2.5rem; /* Hace que el Psi sea más grande 
-    margin-right: 10px;
-}*/
 
-/* Estilos Específicos del Footer */
 .bottom-frame {
-    margin-top: auto; /* Empuja el footer hacia abajo */
+    margin-top: auto; 
 }
 
 .footer-content {
-    justify-content: center; /* Centra el contenido de contacto */
+    justify-content: center; 
     font-size: 0.9rem;
     text-align: center;
 }
@@ -138,9 +100,7 @@ nav a.activo {
     margin-right: 5px;
 }
 
-/* ----------------------------------- */
-/* ESTILOS DEL CONTENIDO CENTRAL (ORIGINALES) */
-/* ----------------------------------- */
+/* Contenedor principal */
 
 .container {
     display: flex;
@@ -160,7 +120,7 @@ nav a.activo {
     min-width: 400px;
 }
 
-/* Estilos para FullCalendar (mantenidos) */
+/* Estilos para el calendario */
 #calendar {
     max-width: 100%;
     margin: 0 auto;
@@ -170,7 +130,7 @@ nav a.activo {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* (El resto de estilos de FullCalendar y Formulario se mantienen del código anterior) */
+/*Aqui t kedaste powa*/
 .fc .fc-toolbar-title {
     color: var(--primary-color);
     font-weight: 700;
@@ -266,44 +226,44 @@ nav a.activo {
         min-width: unset;
     }
 }
-/*gestion*/
+
 /* ========================================================================= */
-/* --- ESTILOS ESPECÍFICOS PARA EL PANEL DE CONSULTA Y BAJA (consultas.html) --- */
+/* --- estilos de consultas.html) --- */
 /* ========================================================================= */
 
-/* Aseguramos que los elementos de contenido central (tabla y detalles) no se estiren */
+
 .container {
-    /* Mantenemos display: flex, justify-content: space-between, pero añadimos: */
-    align-items: flex-start; /* CRÍTICO: Evita que la tabla o los detalles se estiren hasta abajo */
+    
+    align-items: flex-start; 
 }
 
-/* 1. SECCIÓN DE LA TABLA (Muestra el Listado de Citas) */
+/*tablita*/
 .table-section {
-    flex: 2; /* Ocupa 2/3 del espacio horizontal */
+    flex: 2; 
     min-width: 500px;
-    background-color: var(--input-bg); /* Fondo blanco */
+    background-color: var(--input-bg); 
     padding: 1.5rem;
     border-radius: 10px;
-    /* Sombra para efecto de tarjeta flotante */
+    
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
 }
 
 .table-section h2 {
-    text-align: left; /* Título alineado a la izquierda */
+    text-align: left; 
     margin-bottom: 1rem;
     color: var(--primary-color);
     font-weight: 700;
     font-size: 1.5rem;
 }
 
-/* Estilos de la Tabla */
+
 .citas-table {
     width: 100%;
-    border-collapse: collapse; /* Bordes unidos */
+    border-collapse: collapse; 
 }
 
 .citas-table thead {
-    background-color: var(--primary-color); /* Morado Oscuro para la cabecera */
+    background-color: var(--primary-color); 
     color: white;
 }
 
@@ -311,45 +271,43 @@ nav a.activo {
 .citas-table td {
     padding: 0.8rem;
     text-align: left;
-    border: 1px solid #ddd; /* Bordes gris claro */
+    border: 1px solid #ddd; 
 }
 
-/* Estilo para las filas de datos */
+
 .citas-table tbody tr {
     transition: background-color 0.2s;
 }
 
 .citas-table tbody tr:hover {
-    background-color: #f0f0f0; /* Resalta la fila al pasar el ratón */
+    background-color: #f0f0f0;
     cursor: pointer;
 }
 
-/* Estilo para la fila seleccionada por JS */
+
 .citas-table tbody tr.selected-row {
-    background-color: var(--secondary-color); /* Morado claro para la fila activa */
-    font-weight: 500;
+    background-color: var(--secondary-color); 
 }
 
 
-/* 2. SECCIÓN DE DETALLES (Muestra info de la cita seleccionada) */
+
 .details-section {
-    flex: 1; /* Ocupa 1/3 del espacio horizontal */
+    flex: 1; 
     min-width: 300px;
-    background-color: var(--input-bg); /* Fondo blanco, como en tu imagen */
+    background-color: var(--input-bg); 
     padding: 1.5rem;
     border-radius: 10px;
     color: var(--text-color);
-    /* Sombra para efecto de tarjeta flotante */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
 }
 
 .details-section h2 {
-    text-align: left; /* Título alineado a la izquierda */
+    text-align: left; 
     margin-bottom: 1.5rem;
     color: var(--primary-color);
     font-weight: 700;
     font-size: 1.5rem;
-    border-bottom: 2px solid var(--secondary-color); /* Separador sutil */
+    border-bottom: 2px solid var(--secondary-color); 
     padding-bottom: 0.5rem;
 }
 
@@ -359,15 +317,14 @@ nav a.activo {
 }
 
 #citaDetails strong {
-    color: var(--primary-color); /* Color principal para las etiquetas */
+    color: var(--primary-color); 
 }
 
-/* 3. BOTÓN DE ELIMINAR (Baja) */
 .btn-eliminar {
     display: block;
     width: 100%;
     padding: 1rem;
-    background-color: var(--accent-color); /* Verde vibrante */
+    background-color: var(--accent-color); 
     color: white;
     border: none;
     border-radius: 5px;
@@ -379,15 +336,15 @@ nav a.activo {
 }
 
 .btn-eliminar:hover:not(:disabled) {
-    background-color: #43a047; /* Verde más oscuro al pasar el ratón */
+    background-color: #43a047; 
 }
 
 .btn-eliminar:disabled {
-    background-color: #cccccc;
+    background-color: #809c82;
     cursor: not-allowed;
 }
 
-/* Asegura la responsividad si los elementos se apilan */
+
 @media (max-width: 768px) {
     .table-section, .details-section {
         min-width: unset;

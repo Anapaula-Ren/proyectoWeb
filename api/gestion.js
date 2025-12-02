@@ -1,17 +1,15 @@
-// api/gestion.js - Endpoints consolidados para ALTA, CONSULTA y BAJA
-
 const mysql = require('mysql2/promise');
 
-// Configuración de la conexión usando Variables de Entorno de Vercel
+// Configuracion de la BD
 const dbConfig = {
     
     host: process.env.DB_HOST, 
     port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 26245, 
     user: process.env.DB_USER,
-    password: process.env.DB_PASS, // Aquí se usará el valor de Vercel
+    password: process.env.DB_PASS, 
     database: process.env.DB_NAME,
 
-    // --- LÍNEA A AÑADIR (CRUCIAL) ---
+    
     ssl: {
            rejectUnauthorized: false
     }
@@ -20,7 +18,7 @@ const dbConfig = {
 };
 
 module.exports = async (req, res) => {
-    // Configuración de CORS para permitir todos los métodos necesarios
+    
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -36,13 +34,13 @@ module.exports = async (req, res) => {
     try {
         connection = await mysql.createConnection(dbConfig);
         
-        // -----------------------------------------------------------------
-        // 1. ALTA (CREAR) - Maneja el método POST
-        // -----------------------------------------------------------------
+        
+        // 1. ALTA (CREAR) 
+        
         if (method === 'POST') {
-           // const data = req.body;
+           
            const data= typeof req.body === 'string'? JSON.parse(req.body) : req.body;
-            //const data = JSON.parse(req.body); 
+             
             const { nombreCompleto, edad, categoria, numeroTelefono, fechaCita, horaCita } = data;
 
             await connection.beginTransaction(); // Iniciar transacción
@@ -53,7 +51,7 @@ module.exports = async (req, res) => {
             );
 
             if (existingCita.length > 0) {
-                await connection.rollback(); // Deshacer cualquier operación
+                await connection.rollback(); 
                 return res.status(409).json({ success: false, message: 'La hora y fecha seleccionadas ya están ocupadas.' });
             }
             //final no cita duplicada
@@ -65,10 +63,10 @@ module.exports = async (req, res) => {
             );
 
             if (existingPatient.length > 0) {
-                // Paciente encontrado: usar su ID existente
+                
                 id_paciente = existingPatient[0].id_paciente;
             } else {
-                // Paciente nuevo: Insertar y obtener el nuevo ID
+                
                 const [patientResult] = await connection.execute(
                     'INSERT INTO pacientes (nombre_completo, edad, categoria, numero_telefono) VALUES (?, ?, ?, ?)',
                     [nombreCompleto, edad, categoria, numeroTelefono]
@@ -76,13 +74,7 @@ module.exports = async (req, res) => {
                 id_paciente = patientResult.insertId;
             }
             //final para checar si el paciente ya existe
-            // INSERTAR PACIENTE prev
-            /*const [patientResult] = await connection.execute(
-                'INSERT INTO pacientes (nombre_completo, edad, categoria, numero_telefono) VALUES (?, ?, ?, ?)',
-                [nombreCompleto, edad, categoria, numeroTelefono]
-            );
-            const id_paciente = patientResult.insertId;*/
-
+          
             // INSERTAR CITA
             await connection.execute(
                 'INSERT INTO citas (id_paciente, fecha_cita, hora_cita) VALUES (?, ?, ?)',
@@ -95,11 +87,8 @@ module.exports = async (req, res) => {
             return;
         }
 
-        // -----------------------------------------------------------------
-        // 2. CONSULTA (LEER) y BAJA (ELIMINAR) - Se manejan por el método
-        // -----------------------------------------------------------------
         
-        // CONSULTA (LEER) - Maneja el método GET
+        // CONSULTA (LEER)
         if (method === 'GET') {
             const sql = `
                 SELECT c.id_cita, p.nombre_completo AS nombre_paciente, p.edad, p.categoria, p.numero_telefono, c.fecha_cita, c.hora_cita 
@@ -113,7 +102,7 @@ module.exports = async (req, res) => {
             return;
         }
 
-        // BAJA (ELIMINAR) - Maneja el método DELETE
+        // BAJA (ELIMINAR) 
         if (method === 'DELETE') {
             const id_cita = req.query.id;
             

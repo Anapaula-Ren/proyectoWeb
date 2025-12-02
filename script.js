@@ -5,62 +5,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     const API_URL = '/api/gestion'; 
-    // Verificación de existencia del elemento DOM
-   /* if (!calendarEl) {
-        console.error("No se encontró el elemento con ID 'calendar'.");
-        return;
-    }*/
+
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        // --- Cambios Cruciales ---
-        initialView: 'timeGridWeek', // Vista inicial: semanal por horas
+        
+        initialView: 'timeGridWeek', // Vista semanal por horas
         slotMinTime: '09:00:00',     // Inicia la agenda a las 9 AM
         slotMaxTime: '20:00:00',     // Termina la agenda a las 8 PM
-        slotDuration: '00:60:00',    // Intervalos de 60 minutos
-        // -------------------------
-
+        slotDuration: '00:60:00',    
         locale: 'es',
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            // Agregamos la vista semanal y diaria para que el usuario pueda ver las horas
+            //los otroas vistas
             right: 'dayGridMonth,timeGridWeek,timeGridDay' 
         },
         editable: false,
         selectable: true, 
         
-        // La función 'select' ahora devolverá la fecha Y la hora de inicio y fin
-        select: function(info) {
-            // Obtener la fecha y hora seleccionada
-            const startDateTime = info.start; // Objeto Date/Time
+             select: function(info) {
+            // Obtener la fecha y hora 
+            const startDateTime = info.start; 
             
             // Formatear la fecha a YYYY-MM-DD
             const formattedDate = startDateTime.toISOString().split('T')[0];
             
             // Formatear la hora a HH:MM:SS
-            // getHours() devuelve 0-23. getMinutes() devuelve 0-59.
             const hours = String(startDateTime.getHours()).padStart(2, '0');
             const minutes = String(startDateTime.getMinutes()).padStart(2, '0');
             const formattedTime = `${hours}:${minutes}`;
 
-            // 1. Asignar la fecha al input
             fechaCitaInput.value = formattedDate;
-            
-            // 2. Asignar la hora al select del formulario
-            // NOTA: Tu <select id="horaCita"> debe tener la opción con el valor HH:MM
             horaCitaSelect.value = formattedTime; 
-            
-            calendar.unselect(); // Opcional: Deseleccionar el slot
+            calendar.unselect(); 
         },
-        
-        events: [
-            // Citas de ejemplo...
-        ]
-    });
+           });
 
     calendar.render();
 
-    // --- NUEVO CÓDIGO 2: LÓGICA DE ENVÍO DEL FORMULARIO ACTUALIZADA (ALTA) ---
+    //ALTA de citas
     document.getElementById('appointmentForm').addEventListener('submit', async function(event) {
         event.preventDefault(); 
 
@@ -73,11 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
             horaCita: document.getElementById('horaCita').value
         };
 
-        /*if (!formData.fechaCita || !formData.horaCita) {
-             alert('Por favor, selecciona una fecha y hora válidas en el calendario.');
-             return;
-        }*/
-       console.log('--- Intentando FETCH --- Datos a enviar:', formData); // NUEVA LÍNEA DE DIAGNÓSTICO
+        console.log('--- Intentando FETCH --- Datos a enviar:', formData); 
 
         try {
             // Llama a /api/gestion usando el método POST
@@ -103,69 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Hubo un error de conexión al agendar la cita. Asegúrate de que tu servidor Node.js/Vercel esté corriendo.');
         }
     });
-    // ------------------------------------------------------------------------
+    
 });
-
-/*document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var fechaCitaInput = document.getElementById('fechaCita');
-    var horaCitaSelect = document.getElementById('horaCita'); // Referencia al <select> de la hora
-
-    // Verificación de existencia del elemento DOM
-    if (!calendarEl) {
-        console.error("No se encontró el elemento con ID 'calendar'.");
-        return;
-    }
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        // --- Cambios Cruciales ---
-        initialView: 'timeGridWeek', // Vista inicial: semanal por horas
-        slotMinTime: '09:00:00',     // Inicia la agenda a las 9 AM
-        slotMaxTime: '20:00:00',     // Termina la agenda a las 8 PM
-        slotDuration: '00:60:00',    // Intervalos de 60 minutos
-        // -------------------------
-
-        locale: 'es',
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            // Agregamos la vista semanal y diaria para que el usuario pueda ver las horas
-            right: 'dayGridMonth,timeGridWeek,timeGridDay' 
-        },
-        editable: false,
-        selectable: true, 
-        
-        // La función 'select' ahora devolverá la fecha Y la hora de inicio y fin
-        select: function(info) {
-            // Obtener la fecha y hora seleccionada
-            const startDateTime = info.start; // Objeto Date/Time
-            
-            // Formatear la fecha a YYYY-MM-DD
-            const formattedDate = startDateTime.toISOString().split('T')[0];
-            
-            // Formatear la hora a HH:MM:SS
-            // getHours() devuelve 0-23. getMinutes() devuelve 0-59.
-            const hours = String(startDateTime.getHours()).padStart(2, '0');
-            const minutes = String(startDateTime.getMinutes()).padStart(2, '0');
-            const formattedTime = `${hours}:${minutes}`;
-
-            // 1. Asignar la fecha al input
-            fechaCitaInput.value = formattedDate;
-            
-            // 2. Asignar la hora al select del formulario
-            // NOTA: Tu <select id="horaCita"> debe tener la opción con el valor HH:MM
-            horaCitaSelect.value = formattedTime; 
-            
-            calendar.unselect(); // Opcional: Deseleccionar el slot
-        },
-        
-          });
-
-    calendar.render();
-
-    // ... (El resto de la lógica del formulario se mantiene)
-});*/
-
-
-
 

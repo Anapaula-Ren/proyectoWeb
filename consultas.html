@@ -82,15 +82,14 @@
             const eliminarCitaBtn = document.getElementById('eliminarCitaBtn');
 
             let selectedCitaId = null; 
-            // Apunta al único endpoint Serverless para todas las operaciones
             const API_URL = '/api/gestion'; 
 
-            // --- 1. FUNCIÓN DE CONSULTA (GET) ---
+            // --- Consulta (GET) ---
             async function fetchCitas() {
                 citasTableBody.innerHTML = '<tr><td colspan="4">Cargando citas...</td></tr>';
                 
                 try {
-                    // Llama a /api/gestion con el método GET (Consulta)
+                    
                     const response = await fetch(API_URL); 
                     
                     if (!response.ok) {
@@ -124,7 +123,7 @@
                 }
             }
 
-            // --- 2. Muestra los detalles de la fila seleccionada ---
+            // Muestra los detalles 
             function showCitaDetails(cita) {
                 selectedCitaId = cita.id_cita;
                 document.getElementById('detailNombre').textContent = cita.nombre_paciente;
@@ -135,21 +134,21 @@
 
                 eliminarCitaBtn.disabled = false; 
                 
-                // Efecto visual: Resaltar la fila seleccionada
+                
                 document.querySelectorAll('.citas-table tbody tr').forEach(row => {
                     row.classList.remove('selected-row');
                 });
                 document.querySelector(`[data-cita-id="${cita.id_cita}"]`).classList.add('selected-row');
             }
 
-            // --- 3. FUNCIÓN DE BAJA (DELETE) ---
+            // --- BAJA (DELETE) ---
             eliminarCitaBtn.addEventListener('click', async function() {
                 if (!selectedCitaId) return;
 
-                if (!confirm('¿Estás seguro de que quieres eliminar esta cita? Esta acción es irreversible.')) return;
+                if (!confirm('¿Estás seguro de que quieres eliminar esta cita?')) return;
 
                 try {
-                    // Llama a /api/gestion con el método DELETE, pasando el ID en la query string
+                    
                     const response = await fetch(`${API_URL}?id=${selectedCitaId}`, {
                         method: 'DELETE' 
                     });
@@ -162,11 +161,11 @@
                     if (result.success) {
                         alert('Cita eliminada con éxito.');
                         
-                        // Refrescar la tabla y limpiar los detalles
+                        
                         fetchCitas(); 
                         selectedCitaId = null;
                         eliminarCitaBtn.disabled = true;
-                        // Limpiar el panel de detalles después de la eliminación
+                        // Limpiar despues d borrar
                         document.getElementById('detailNombre').textContent = '---';
                         document.getElementById('detailEdad').textContent = '---';
                         document.getElementById('detailTelefono').textContent = '---';
@@ -181,7 +180,6 @@
                 }
             });
 
-            // Iniciar la consulta al cargar la página
             fetchCitas();
         });
     </script>

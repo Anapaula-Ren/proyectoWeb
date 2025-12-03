@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            //los otroas vistas
             right: 'dayGridMonth,timeGridWeek,timeGridDay' 
         },
         editable: false,
@@ -82,6 +81,118 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Hubo un error de conexión al agendar la cita. Asegúrate de que tu servidor Node.js/Vercel esté corriendo.');
         }
     });
+
     
 });
+
+//consultas
+
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            const citasTableBody = document.getElementById('citasTableBody');
+            const citaDetails = document.getElementById('citaDetails');
+            const eliminarCitaBtn = document.getElementById('eliminarCitaBtn');
+
+            let selectedCitaId = null; 
+            const API_URL = '/api/gestion'; 
+
+            // --- Consulta (GET) ---
+            async function fetchCitas() {
+                citasTableBody.innerHTML = '<tr><td colspan="4">Cargando citas...</td></tr>';
+                
+                try {
+                    
+                    const response = await fetch(API_URL); 
+                    
+                    if (!response.ok) {
+                        const errorBody = await response.json().catch(() => ({ message: 'Error desconocido del servidor.' }));
+                        throw new Error(`HTTP Error ${response.status}: ${errorBody.message || 'Error al conectar.'}`);
+                    }
+                    const citas = await response.json();
+
+                    citasTableBody.innerHTML = ''; 
+
+                    if (citas.length === 0) {
+                        citasTableBody.innerHTML = '<tr><td colspan="4">No hay citas agendadas.</td></tr>';
+                        return;
+                    }
+
+                    citas.forEach(cita => {
+                        const row = document.createElement('tr');
+                        row.dataset.citaId = cita.id_cita; 
+                        row.innerHTML = `
+                            <td>${cita.id_cita}</td>
+                            <td>${cita.nombre_paciente}</td>
+                            <td>${cita.fecha_cita}</td>
+                            <td>${cita.hora_cita.substring(0, 5)}</td>
+                        `;
+                        row.addEventListener('click', () => showCitaDetails(cita));
+                        citasTableBody.appendChild(row);
+                    });
+                } catch (error) {
+                    console.error('Error al obtener las citas:', error);
+                    citasTableBody.innerHTML = `<tr><td colspan="4">Error al cargar las citas. ${error.message}</td></tr>`;
+                }
+            }
+
+            // Muestra los detalles 
+            function showCitaDetails(cita) {
+                selectedCitaId = cita.id_cita;
+                document.getElementById('detailNombre').textContent = cita.nombre_paciente;
+                document.getElementById('detailEdad').textContent = `${cita.edad} años - ${cita.categoria}`;
+                document.getElementById('detailTelefono').textContent = cita.numero_telefono;
+                document.getElementById('detailFecha').textContent = cita.fecha_cita;
+                document.getElementById('detailHora').textContent = cita.hora_cita.substring(0, 5); 
+
+                eliminarCitaBtn.disabled = false; 
+                
+                
+                document.querySelectorAll('.citas-table tbody tr').forEach(row => {
+                    row.classList.remove('selected-row');
+                });
+                document.querySelector(`[data-cita-id="${cita.id_cita}"]`).classList.add('selected-row');
+            }
+
+            // --- BAJA (DELETE) ---
+            eliminarCitaBtn.addEventListener('click', async function() {
+                if (!selectedCitaId) return;
+
+                if (!confirm('¿Estás seguro de que quieres eliminar esta cita?')) return;
+
+                try {
+                    
+                    const response = await fetch(`${API_URL}?id=${selectedCitaId}`, {
+                        method: 'DELETE' 
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error al eliminar la cita');
+                    }
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Cita eliminada con éxito.');
+                        
+                        
+                        fetchCitas(); 
+                        selectedCitaId = null;
+                        eliminarCitaBtn.disabled = true;
+                        // Limpiar despues d borrar
+                        document.getElementById('detailNombre').textContent = '---';
+                        document.getElementById('detailEdad').textContent = '---';
+                        document.getElementById('detailTelefono').textContent = '---';
+                        document.getElementById('detailFecha').textContent = '---';
+                        document.getElementById('detailHora').textContent = '---';
+                    } else {
+                        alert('No se pudo eliminar la cita: ' + (result.message || 'Error desconocido.'));
+                    }
+                } catch (error) {
+                    console.error('Error al eliminar la cita:', error);
+                    alert('Hubo un error de conexión al eliminar la cita.');
+                }
+            });
+
+            fetchCitas();
+        });
+
 

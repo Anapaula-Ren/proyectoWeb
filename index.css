@@ -46,6 +46,7 @@ body {
     display: flex; 
     align-items: center;
     justify-content: space-between; /* Empuja el título a un extremo y la navegación al otro */
+    
 }
 
 
@@ -82,8 +83,6 @@ nav a.activo {
     font-weight: 700;
     border-bottom: 3px solid var(--accent-color); /* Línea verde debajo del enlace activo */
 }
-
-
 
 
 .bottom-frame {
@@ -130,7 +129,7 @@ nav a.activo {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-/*Aqui t kedaste powa*/
+
 .fc .fc-toolbar-title {
     color: var(--primary-color);
     font-weight: 700;

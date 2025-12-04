@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
                 await connection.rollback(); 
                 return res.status(409).json({ success: false, message: 'La hora y fecha seleccionadas ya están ocupadas.' });
             }
-            //final no cita duplicada
+            
             // checar si el paciente ya existe
             let id_paciente;
             const [existingPatient] = await connection.execute(

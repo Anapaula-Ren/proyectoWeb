@@ -84,8 +84,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
 });
-
+//=======================
 //consultas
+//========================
 
     
         document.addEventListener('DOMContentLoaded', function() {

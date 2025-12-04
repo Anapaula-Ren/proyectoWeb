@@ -36,7 +36,7 @@ body {
     height: 5px;
 }
 
-/* Ajustamos el main-band para alinear el título y la navegación en extremos */
+/*Bandita principal*/
 .main-band {
     background-color: var(--primary-color);
     color: white;
